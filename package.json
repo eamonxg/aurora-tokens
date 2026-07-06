@@ -1,0 +1,27 @@
+{
+  "name": "@eamonxg/token-engine",
+  "version": "1.0.0",
+  "description": "OKLCH design-token derivation engine: five operators (mix/shade/set/alpha/const) and a spec-driven resolver, shared by the LuCI Aurora and shadcn themes",
+  "license": "Apache-2.0",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eamonxg/token-engine.git"
+  },
+  "exports": {
+    ".": "./index.js",
+    "./engine.js": "./engine.js",
+    "./resolve.js": "./resolve.js"
+  },
+  "files": [
+    "index.js",
+    "engine.js",
+    "resolve.js"
+  ],
+  "scripts": {
+    "test": "node --test tests/*.test.js"
+  },
+  "dependencies": {
+    "colorjs.io": "^0.6.1"
+  }
+}
