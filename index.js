@@ -4,4 +4,6 @@
  */
 
 export { mix, shade, set, alpha, konst, toOklch } from "./engine.js";
-export { createResolver } from "./resolve.js";
+export { createResolver, resolveTokens, resolveMode } from "./resolve.js";
+export { DERIVATIONS, FIXED } from "./spec.js";
+export { DEFAULTS } from "./defaults.js";

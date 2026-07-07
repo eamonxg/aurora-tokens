@@ -4,6 +4,8 @@
  */
 
 import { mix, shade, set, alpha, konst, toOklch } from "./engine.js";
+import { DERIVATIONS } from "./spec.js";
+import { DEFAULTS } from "./defaults.js";
 
 // Bind a theme's derivation spec ({ light: {token: rule}, dark: {...} }) to a
 // resolver. Rules: ['mix',a,b,p] ['shade',a,dl] ['set',a,L,C] ['alpha',a,p]
@@ -56,3 +58,9 @@ export function createResolver(derivations) {
     return resolved;
   };
 }
+
+// The Aurora spec bound to the resolver -- what the theme build and the
+// config app's vendored bundle both consume.
+export const resolveTokens = createResolver(DERIVATIONS);
+
+export const resolveMode = (mode) => resolveTokens(mode, { ...DEFAULTS[mode] });

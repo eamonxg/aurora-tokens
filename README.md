@@ -1,41 +1,21 @@
-# @eamonxg/token-engine
+# @eamonxg/aurora-tokens
 
-OKLCH design-token derivation engine shared by
-[luci-theme-aurora](https://github.com/eamonxg/luci-theme-aurora) and
-[luci-theme-shadcn](https://github.com/eamonxg/luci-theme-shadcn): five color
-operators and a spec-driven resolver. The engine is the *mechanism*; each
-theme owns its *policy* (a `spec.js` of derivation rules and a `defaults.js`
-of input colors) and binds it with `createResolver`.
+Aurora design-token model in one package:
 
-## Usage
-
-```js
-import { createResolver } from "@eamonxg/token-engine";
-import { DERIVATIONS } from "./spec.js";
-import { DEFAULTS } from "./defaults.js";
-
-const resolveTokens = createResolver(DERIVATIONS);
-const light = resolveTokens("light", { ...DEFAULTS.light });
-// -> { bg: "oklch(...)", text_muted: "oklch(...)", ... } flat literals only
-```
-
-Rules: `['mix',a,b,p]` `['shade',a,dl]` `['set',a,L,C]` `['alpha',a,p]`
-`['const',str]` — `'const','var:x'` aliases token `x`. Rules may reference
-inputs or other derived tokens; dependencies resolve recursively.
-
-The operators (`mix`, `shade`, `set`, `alpha`, `konst`, `toOklch`) are also
-exported individually. All output is serialized to flat `oklch()` literals —
-no `color-mix()` / `var()` — so it can be baked into CSS or stored in UCI.
+- **engine.js** — five OKLCH operators (`mix` / `shade` / `set` / `alpha` / `const`) and `createResolver` (import via `@eamonxg/aurora-tokens/engine` to reuse the mechanism with your own spec)
+- **spec.js / defaults.js** — the Aurora derivation rules and default palette (the single source of truth)
+- **resolve.js** — `resolveTokens(mode, inputs)` / `resolveMode(mode)` bound to the Aurora spec
+- **dist/tokens.global.js** — prebuilt browser IIFE (`AuroraTokens` global; expects a `Color` global from colorjs.io), built on publish
 
 ## Consumers
 
-- **luci-theme-aurora / luci-theme-shadcn** — `.dev/tokens/resolve.js` binds
-  each theme's spec at build time (`gen:tokens` bakes `_tokens.css`).
-- **@eamonxg/aurora-tokens** — published from the aurora theme repo; bundles
-  this engine with the aurora spec into a browser global for
-  luci-app-aurora-config.
+- [luci-theme-aurora](https://github.com/eamonxg/luci-theme-aurora) imports the ESM model at build time to generate its CSS variables.
+- [luci-app-aurora-config](https://github.com/eamonxg/luci-app-aurora-config) vendors `dist/tokens.global.js` by pinned version (`scripts/sync-tokens.mjs`).
+
+## Versioning
+
+Independent semver. Removing/renaming a token or changing derivation semantics is **major**; adding a token is **minor**; value tweaks are **patch**.
 
 ## Release
 
-Bump `version` in `package.json`, tag `v<version>`, push the tag — CI
-publishes to npm (requires the `NPM_TOKEN` repo secret).
+Tag `vX.Y.Z` (matching package.json) and push — CI tests and publishes with the repo's `NPM_TOKEN` secret.

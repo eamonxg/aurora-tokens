@@ -1,27 +1,37 @@
 {
-  "name": "@eamonxg/token-engine",
+  "name": "@eamonxg/aurora-tokens",
   "version": "1.0.0",
-  "description": "OKLCH design-token derivation engine: five operators (mix/shade/set/alpha/const) and a spec-driven resolver, shared by the LuCI Aurora and shadcn themes",
+  "description": "Aurora design-token model: OKLCH derivation engine (mix/shade/set/alpha/const), the Aurora token spec and defaults, plus a prebuilt browser global (dist/tokens.global.js). Consumed by luci-theme-aurora at build time and vendored by luci-app-aurora-config.",
   "license": "Apache-2.0",
   "type": "module",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/eamonxg/token-engine.git"
+    "url": "git+https://github.com/eamonxg/aurora-tokens.git"
   },
   "exports": {
     ".": "./index.js",
-    "./engine.js": "./engine.js",
-    "./resolve.js": "./resolve.js"
+    "./engine": "./engine.js",
+    "./resolve.js": "./resolve.js",
+    "./spec.js": "./spec.js",
+    "./defaults.js": "./defaults.js"
   },
   "files": [
     "index.js",
     "engine.js",
-    "resolve.js"
+    "resolve.js",
+    "spec.js",
+    "defaults.js",
+    "dist/"
   ],
   "scripts": {
-    "test": "node --test tests/*.test.js"
+    "build": "node build-global.mjs",
+    "test": "npm run build && node --test tests/*.test.js",
+    "prepublishOnly": "npm test"
   },
   "dependencies": {
     "colorjs.io": "^0.6.1"
+  },
+  "devDependencies": {
+    "esbuild": "^0.25.0"
   }
 }
