@@ -10,10 +10,7 @@
   },
   "exports": {
     ".": "./index.js",
-    "./engine": "./engine.js",
-    "./resolve.js": "./resolve.js",
-    "./spec.js": "./spec.js",
-    "./defaults.js": "./defaults.js"
+    "./engine": "./engine.js"
   },
   "files": [
     "index.js",

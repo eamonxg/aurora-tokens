@@ -2,7 +2,7 @@
 
 Aurora design-token model in one package:
 
-- **engine.js** — five OKLCH operators (`mix` / `shade` / `set` / `alpha` / `const`) and `createResolver` (import via `@eamonxg/aurora-tokens/engine` to reuse the mechanism with your own spec)
+- **engine.js** — five OKLCH operators (`mix` / `shade` / `set` / `alpha` / `const`) (import via `@eamonxg/aurora-tokens/engine` to reuse the mechanism with your own spec; `createResolver` comes from the package root)
 - **spec.js / defaults.js** — the Aurora derivation rules and default palette (the single source of truth)
 - **resolve.js** — `resolveTokens(mode, inputs)` / `resolveMode(mode)` bound to the Aurora spec
 - **dist/tokens.global.js** — prebuilt browser IIFE (`AuroraTokens` global; expects a `Color` global from colorjs.io), built on publish
