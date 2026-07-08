@@ -6,7 +6,7 @@ export const DEFAULTS = {
     text: "oklch(0.21 0.02 264)",
     brand: "oklch(0.58 0.14 233)",
     on_brand: "oklch(1 0 0)",
-    link: "oklch(0.74 0.238 322.16)",
+    link: "oklch(0.58 0.14 233)", // intentionally equals brand
     info: "oklch(0.45 0.12 255)",
     warning: "oklch(0.35 0.08 60)",
     success: "oklch(0.32 0.09 165)",
@@ -18,7 +18,7 @@ export const DEFAULTS = {
     text: "oklch(0.985 0.002 264)",
     brand: "oklch(0.6 0.13 188.745)",
     on_brand: "oklch(1 0 0)",
-    link: "oklch(0.77 0.14 168)",
+    link: "oklch(0.6 0.13 188.745)", // intentionally equals brand
     info: "oklch(0.8 0.11 255)",
     warning: "oklch(0.82 0.13 80)",
     success: "oklch(0.72 0.13 158)",
