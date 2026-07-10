@@ -1,7 +1,8 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import Color from "colorjs.io";
-import { resolveMode } from "../index.js";
+import { resolveMode, resolveTokens } from "../index.js";
+import { DEFAULTS } from "../defaults.js";
 
 const lch = (s) => {
   const c = new Color(s).to("oklch");
@@ -57,4 +58,10 @@ test("brand family and dark mode are untouched by the relight", () => {
   const d = resolveMode("dark");
   assert.equal(d.bg, "oklch(0.13 0.018 264)");
   assert.equal(d.mega_menu_scrim, "oklch(0% 0 0 / 0.5)");
+});
+
+test("set on an achromatic base stays achromatic (no invented pink hue)", () => {
+  const l = resolveTokens("light", { ...DEFAULTS.light, bg: "oklch(0.99 0 0)" });
+  const sunken = lch(l.surface_sunken);
+  assert.equal(sunken.C, 0, `achromatic bg must not gain chroma: ${l.surface_sunken}`);
 });

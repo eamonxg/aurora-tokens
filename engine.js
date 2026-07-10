@@ -20,7 +20,10 @@ export const shade = (a, dl) => {
 export const set = (a, L, Ch) => {
   const c = C(a).to("oklch");
   c.coords[0] = L;
-  c.coords[1] = Ch;
+  // An achromatic base (chroma ~0) has no meaningful hue: forcing chroma onto
+  // it would invent a pink cast, so achromatic in stays achromatic out.
+  const achromatic = c.coords[1] < 0.001 || Number.isNaN(c.coords[2]);
+  c.coords[1] = achromatic ? 0 : Ch;
   return c;
 };
 
