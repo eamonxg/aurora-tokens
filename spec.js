@@ -4,10 +4,12 @@ export const DERIVATIONS = {
   light: {
     text_muted: ["mix", "text", "bg", 0.62],
     text_subtle: ["mix", "text", "bg", 0.48],
-    surface_sunken: ["shade", "bg", -0.012],
+    // Recessed fills need chroma ABOVE bg's (set, not shade): at these sizes a
+    // bg-inherited tint reads as dirty grey against the pure-white cards.
+    surface_sunken: ["set", "bg", 0.975, 0.005],
     surface_overlay: ["shade", "bg", 0.016],
     hairline: ["alpha", "text", 0.13],
-    hover_faint: ["shade", "bg", -0.04],
+    hover_faint: ["set", "bg", 0.95, 0.006],
     brand_hover: ["shade", "brand", -0.06],
     brand_subtle: ["mix", "brand", "bg", 0.12],
     brand_subtle_hover: ["shade", "brand_subtle", -0.04],
@@ -19,15 +21,19 @@ export const DERIVATIONS = {
     success_surface: ["set", "success", 0.95, 0.042],
     danger_surface: ["set", "danger", 0.95, 0.036],
     danger_surface_hover: ["shade", "danger_surface", -0.04],
+    // Form-control fill (inputs/selects/textareas/checkboxes, login field).
+    // One semantic token so components never fork per mode: light rests a
+    // near-white overlay on the page; dark recesses below the card.
+    control_bg: ["const", "var:surface_overlay"],
     scrim: ["const", "oklch(0 0 0 / 0.6)"],
     // Fully opaque: a clean solid panel (Apple's #fafafc). Any translucency let
     // the dimmed curtain bleed through, greying the panel off the header tone
     // and leaking faint blurred page content into the empty columns. The header
     // lifts to this same colour when the menu opens (see _layout.css) so bar and
     // panel read as one continuous surface.
-    // Relight 2026-07: an icy step above bg (set, not shade) so the panel
-    // keeps the snow-blue chroma instead of washing toward pure white.
-    mega_menu_bg: ["set", "bg", 0.991, 0.006],
+    // Relight 2026-07: a cool snow step BELOW bg — anything brighter read as
+    // paper-white against the dimmed page; extra chroma keeps it icy.
+    mega_menu_bg: ["set", "bg", 0.972, 0.008],
     // Mega-menu curtain: a real dimming layer. A near-page-light grey (the
     // earlier #e8e8ed attempt) only blurred without darkening, so the mask read
     // as absent. Black at a modest alpha actually dims the page; the now-opaque
@@ -58,6 +64,8 @@ export const DERIVATIONS = {
     success_surface: ["set", "success", 0.3, 0.05],
     danger_surface: ["set", "danger", 0.32, 0.08],
     danger_surface_hover: ["shade", "danger_surface", 0.04],
+    // See light: same semantic token, recessed below the card in dark.
+    control_bg: ["const", "var:surface_sunken"],
     scrim: ["const", "oklch(0 0 0 / 0.6)"],
     // Deeper than surface_overlay (23%): surface_sunken (16.5%) tracks Apple's
     // opened-panel #161617 (~18.5%). Fully opaque — a clean solid panel with no
@@ -78,10 +86,15 @@ export const FIXED = {
     app_shadow_md:
       "0 4px 16px oklch(0 0 0 / 0.08), 0 1px 3px oklch(0 0 0 / 0.04)",
     app_shadow_lg: "0 12px 32px oklch(0 0 0 / 0.12)",
+    // Disabled-control opacity: one shared literal so components stop forking
+    // opacity-40/dark:opacity-30 per call site; dark cuts deeper to read inert.
+    app_opacity_disabled: "0.4",
   },
   dark: {
     app_shadow_sm: "0 4px 12px oklch(0 0 0 / 0.3)",
     app_shadow_md: "0 10px 28px oklch(0 0 0 / 0.42)",
     app_shadow_lg: "0 20px 48px oklch(0 0 0 / 0.55)",
+    // See light block: shared disabled-control opacity literal.
+    app_opacity_disabled: "0.3",
   },
 };
