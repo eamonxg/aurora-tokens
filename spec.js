@@ -14,10 +14,10 @@ export const DERIVATIONS = {
     focus_ring: ["alpha", "brand", 0.6],
     progress_start: ["mix", "brand", "surface_sunken", 0.65],
     progress_end: ["const", "var:brand"],
-    info_surface: ["set", "info", 0.94, 0.05],
-    warning_surface: ["set", "warning", 0.95, 0.05],
-    success_surface: ["set", "success", 0.94, 0.05],
-    danger_surface: ["set", "danger", 0.94, 0.05],
+    info_surface: ["set", "info", 0.945, 0.042],
+    warning_surface: ["set", "warning", 0.955, 0.042],
+    success_surface: ["set", "success", 0.95, 0.042],
+    danger_surface: ["set", "danger", 0.95, 0.036],
     danger_surface_hover: ["shade", "danger_surface", -0.04],
     scrim: ["const", "oklch(0 0 0 / 0.6)"],
     // Fully opaque: a clean solid panel (Apple's #fafafc). Any translucency let
@@ -25,14 +25,18 @@ export const DERIVATIONS = {
     // and leaking faint blurred page content into the empty columns. The header
     // lifts to this same colour when the menu opens (see _layout.css) so bar and
     // panel read as one continuous surface.
-    mega_menu_bg: ["alpha", "surface_overlay", 1],
+    // Relight 2026-07: an icy step above bg (set, not shade) so the panel
+    // keeps the snow-blue chroma instead of washing toward pure white.
+    mega_menu_bg: ["set", "bg", 0.991, 0.006],
     // Mega-menu curtain: a real dimming layer. A near-page-light grey (the
     // earlier #e8e8ed attempt) only blurred without darkening, so the mask read
     // as absent. Black at a modest alpha actually dims the page; the now-opaque
     // panel + its shadow give a clean edge, so this no longer bands the way the
     // old translucent panel over a heavy scrim did. Lighter than the 0.6 modal
     // scrim — it's a menu backdrop, not a dialog.
-    mega_menu_scrim: ["const", "oklch(0 0 0 / 0.32)"],
+    // Relight 2026-07: pure black over the snow-white page greyed it dirty;
+    // a cool blue-black dim is the "blue hour" of the light theme.
+    mega_menu_scrim: ["const", "oklch(0.22 0.035 250 / 0.38)"],
   },
   dark: {
     text_muted: ["mix", "text", "bg", 0.62],
